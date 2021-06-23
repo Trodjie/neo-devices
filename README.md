@@ -7,5 +7,5 @@ docker-compose up -d
 docker-compose exec php bin/console d:da:dr --force
 docker-compose exec php bin/console d:da:cr
 docker-compose exec php bin/console d:m:m
-docker-compose exec php php bin/console d:f:l
+docker-compose exec php bin/console d:f:l
 Для некоторых пунктов требуется подтверждение, для этого необходимо написать Yes и нажать Enter
