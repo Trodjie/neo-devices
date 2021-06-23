@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Результаты поиска{% endblock %}
+
+{% block breadcrumbs_inner %}
+    <li class="breadcrumb-item active">
+        Поиск
+    </li>
+{% endblock %}
+
+
+{% block content %}
+    <section>
+        <div class="container-xl">
+            <h1>Результаты поиска по запросу "{{ query }}"</h1>
+            <div class="row">
+                {% if products is empty %}
+                    <h2>Результатов не найдено</h2>
+                {% endif %}
+
+                {% for product in products %}
+                    {% include 'product/_product_card.html.twig' %}
+                {% endfor %}
+            </div>
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </section>
+{% endblock %}

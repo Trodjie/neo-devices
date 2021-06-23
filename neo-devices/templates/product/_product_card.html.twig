@@ -1,0 +1,24 @@
+{# @var product \App\Entity\Product #}
+
+<div class="col-4">
+    <div class="card" style="width: 22rem;">
+        {% if product.imagePath is not null %}
+            <img src="{{ asset('image/uploads/product/' ~ product.imagePath) }}"
+                 class="card-img-top"
+                 alt="{{ product.title }}">
+        {% else %}
+            <img src="https://lh6.ggpht.com/MtTTbZICOcpecG7NhTgDn20vLjNPE2fDRV-dQn48WJTZPqxTlDROe5zP1PIGCS_fUTmp=w100"
+                 class="card-img-top"
+                 alt="{{ product.title }}">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ product.title }}</h5>
+            <a href="{{ path('product_show', {'id': product.id}) }}" class="btn btn-primary">Подробнее</a>
+            {% if product.quantity > 0 %}
+                {{ product.price|number_format(2, ',', ' ') }} руб.
+            {% else %}
+                Товар закончился
+            {% endif %}
+        </div>
+    </div>
+</div>

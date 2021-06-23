@@ -1,0 +1,92 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block breadcrumbs_inner %}
+    <li class="breadcrumb-item active">
+        Корзина
+    </li>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container-xl">
+            <h1>Корзина</h1>
+
+            {% if cart_items is empty %}
+                <h2>Корзина пуста</h2>
+            {% endif %}
+
+            {% for item in cart_items %}
+                {# @var item \App\Entity\CartItem #}
+                {% set product = item.product %}
+                <div class="card">
+                    <div class="row">
+                        <div class="col-3">
+                            <a href="{{ path('product_show', {'id': product.id}) }}">
+                                {% if product.imagePath is not null %}
+                                    <img src="{{ asset('image/uploads/product/' ~ product.imagePath) }}"
+                                         class="cart-item-img"
+                                         alt="{{ product.title }}">
+                                {% else %}
+                                    <img src="https://lh6.ggpht.com/MtTTbZICOcpecG7NhTgDn20vLjNPE2fDRV-dQn48WJTZPqxTlDROe5zP1PIGCS_fUTmp=w100"
+                                         class="cart-item-img"
+                                         alt="{{ product.title }}">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="{{ path('product_show', {'id': product.id}) }}">
+                                {{ product.title }}
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            {% if item.count > 1 %}
+                                <form action="{{ path('cart_change_item_count', {'id': item.id}) }}"
+                                      class="cart-button-form"
+                                      method="post">
+                                    <input type="hidden" name="count" value="{{ item.count - 1 }}">
+                                    <button class="btn btn-primary" type="submit">-</button>
+                                </form>
+                            {% endif %}
+
+                            {{ item.count }}
+
+                            {% if item.count < product.quantity %}
+                                <form action="{{ path('cart_change_item_count', {'id': item.id}) }}"
+                                      class="cart-button-form"
+                                      method="post">
+                                    <input type="hidden" name="count" value="{{ item.count + 1 }}">
+                                    <button class="btn btn-primary" type="submit">+</button>
+                                </form>
+                            {% endif %}
+                            <br>
+                            x {{ product.price|number_format(2, ',', ' ') }} руб.
+                        </div>
+                        <div class="col-2">
+                            {{ item.price|number_format(2, ',', ' ') }} руб.
+                        </div>
+                        <div class="col-1">
+                            <form action="{{ path('cart_remove_item', {'id': item.id}) }}"
+                                  method="post">
+                                <button class="btn btn-danger">X</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if cart_items is not empty %}
+                <div>
+                    <div>
+                        <p>Общая стоимость: <span>{{ total_cost|number_format(2, ',', ' ') }} руб.</span></p>
+                    </div>
+                    <form action="{{ path('order_make') }}" method="post">
+                        <button type="submit" class="btn btn-primary">
+                            Заказать
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

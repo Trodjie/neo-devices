@@ -1,0 +1,5 @@
+/*выбранная категория*/
+.nav-link.activev{
+    background-color: #5DCEC6;
+    color: black; 
+}

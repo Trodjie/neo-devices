@@ -1,0 +1,38 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block breadcrumbs_inner %}
+    <li class="breadcrumb-item active">
+        Вход
+    </li>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container-xl">
+            <div class="row justify-content-around">
+                <div class="col-xs-8">
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    <div class="alert alert-message">
+                        Если у вас еще нет учетной то <a class="btn btn-primary" href="{{ path('security_registration') }}">зарегестрируйтесь</a>
+                    </div>
+
+                    <form action="{{ path('security_login') }}" method="post">
+                        <label for="username">E-Mail:</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+
+                        <label for="password">Пароль:</label>
+                        <input type="password" id="password" name="_password"/>
+
+                        <button type="submit">Войти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Категория {{ product.title }}{% endblock %}
+
+{% block breadcrumbs_inner %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('product_category', {'id': product.category.id}) }}">
+            {{ product.category.title }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active">
+        {{ product.title }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container-xl">
+            <div class="row justify-content-around">
+                <div class="col-4">
+                    <div class="card" style="width: 20rem;">
+                        {% if product.imagePath is not null %}
+                            <img src="{{ asset('image/uploads/product/' ~ product.imagePath) }}"
+                                 class="card-img-top"
+                                 alt="{{ product.title }}">
+                        {% else %}
+                            <img src="https://lh6.ggpht.com/MtTTbZICOcpecG7NhTgDn20vLjNPE2fDRV-dQn48WJTZPqxTlDROe5zP1PIGCS_fUTmp=w100"
+                                 class="card-img-top"
+                                 alt="{{ product.title }}">
+                        {% endif %}
+                        <div class="card-text"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h1>{{ product.title }}</h1>
+
+                    <p>{{ product.description }}</p>
+                    {% if product.quantity == 1 %}
+                        <div class="alert alert-warning" role="alert">
+                            Остался последний товар!
+                        </div>
+                    {% endif %}
+
+                    Цена: <span>{{ product.price|number_format(2, ',', ' ') }}</span>
+
+                    {% if product.quantity > 0 %}
+                        <form action="{{ path('cart_add_item', {'id': product.id}) }}" method="post" style="display: inline">
+                            <button class="btn btn-primary" type="submit">В корзину</button>
+                        </form>
+                    {% else %}
+                        <div class="alert alert-danger" role="alert">
+                            Товар закончился
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

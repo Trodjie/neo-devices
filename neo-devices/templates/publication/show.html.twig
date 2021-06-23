@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Публикация {{ publication.title }}{% endblock %}
+
+{% block breadcrumbs_inner %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('news_list') }}">Новости</a>
+    </li>
+    <li class="breadcrumb-item active">
+        {{ publication.title }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="container-xl">
+            <div class="row align-items-center">
+                <div class="col-6">
+                    <div>
+                        <h1>{{ publication.title }}</h1>
+                        <span>{{ publication.publishedAt|date('d.m.Y') }}</span>
+                    </div>
+                    <div>
+                        <p>{{ publication.text }}</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div>
+                        {% if publication.imagePath is not null %}
+                            <img class="w-50" src="{{ asset('image/uploads/publication/' ~ publication.imagePath) }}"
+                                 alt="{{ publication.title }}">
+                        {% else %}
+                            <img class="w-50" src="https://cs6.pikabu.ru/avatars/1436/v1436368-1164047197.jpg"
+                                 alt="{{ publication.title }}">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

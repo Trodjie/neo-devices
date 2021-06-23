@@ -1,0 +1,73 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Интернет-магазин Neo Devices{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+    <!-- карусель -->
+    <section>
+        <div class="container-xl">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    {% for image in slider_images %}
+                        <div class="carousel-item {% if loop.first %}active{% endif %}">
+                            <img src="{{ image }}"
+                                 class="d-block w-100" alt="...">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- карточки товаров -->
+    <section>
+        <div class="container-xl">
+            <h2>Выгодные предложения</h2>
+            {% for section in products|batch(3) %}
+                <div class="row align-items-center">
+                    {% for product in section %}
+                        <div class="col-4">
+                            <div class="card" style="width: 21rem;">
+                                <img src="{{ asset('image/uploads/product/' ~ product.imagePath) }}"
+                                     class="card-img-top"
+                                     alt="{{ product.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.title }}</h5>
+                                    <a href="{{ path('product_show', {'id': product.id}) }}"
+                                       class="btn btn-primary">Подробнее</a>
+                                    <span>
+                                        {% if product.quantity > 0 %}
+                                            {{ product.price|number_format(2, ',', ' ') }} руб.
+                                        {% else %}
+                                            Товар закончился
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

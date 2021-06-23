@@ -1,0 +1,19 @@
+/*отступ для поиска*/
+.d-flex{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+/*поле поиска*/
+.form-control.me-2{
+    width: 250px;
+}
+/*размер значков*/
+svg{
+    width: 30px;
+    height: 30px;
+}
+/*кнопка поиска*/
+.btn.btn-outline-success{
+    background-color: #5DCEC6;
+    color: black;  
+}

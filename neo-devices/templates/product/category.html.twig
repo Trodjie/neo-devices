@@ -1,0 +1,98 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Категория {{ category.title }}{% endblock %}
+
+{% block breadcrumbs_inner %}
+    <li class="breadcrumb-item active">
+        {{ category.title }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container-xl">
+        <div class="row justify-content-end">
+            <div class="col-8">
+                {{ category.title }}
+            </div>
+            <div class="col-4">
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    {# <div> #}
+                    {# <button type="button" class="btn btn-primary">Фильтр</button> #}
+                    {# </div> #}
+
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            Сортировка
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('product_category', {
+                                    'id': category.id,
+                                    'sort': 'p.price',
+                                    'direction': 'asc'
+                                }) }}">
+                                    Цена по возрастанию
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('product_category', {
+                                    'id': category.id,
+                                    'sort': 'p.price',
+                                    'direction': 'desc'
+                                }) }}">
+                                    Цена по убыванию
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-4">
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-light bg-light">
+                    {{ catalog_menu() }}
+                </div>
+            </div>
+
+
+            {% if products is empty %}
+                <div class="col-4">
+                    <div class="alert alert-warning">
+                        В данной категории нет товаров.
+                    </div>
+                </div>
+            {% endif %}
+
+
+            {% for product in products|slice(0, 2) %}
+                {% include 'product/_product_card.html.twig' %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% for section in products|slice(2)|batch(2) %}
+        <section>
+            <div class="container-xl">
+                <div class="row justify-content-end">
+                    {% for product in section %}
+                        {% include 'product/_product_card.html.twig' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+
+    <div class="container-xl">
+        <div class="row justify-content-end">
+            <div class="col-12">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

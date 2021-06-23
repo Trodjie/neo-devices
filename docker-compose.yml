@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+    webserver:
+        image: nginx:1.11
+        ports:
+            - ${APP_PORT}:80
+        volumes:
+            - ./docker/nginx/dev.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./docker/nginx/common.conf:/etc/nginx/common.conf:ro
+            - ${SYMFONY_APP_PATH}:/var/www/app:cached
+    mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_DATABASE:      neo-devices
+            MYSQL_USER:          user
+            MYSQL_PASSWORD:      password
+            MYSQL_ROOT_PASSWORD: toor
+            MYSQL_ROOT_HOST:     '%'
+    php:
+        volumes:
+            - ./neo-devices:/var/www/app
+        build:
+            context:    .
+            dockerfile: docker/php/Dockerfile
+        environment:
+            WAIT_FOR_MYSQL_TIMEOUT: ~
+            DATABASE_URL:           mysql://user:password@mysql/neo-devices
+        links:
+            - mysql
+        depends_on:
+            - mysql

@@ -1,0 +1,18 @@
+/*текст карты товара*/
+.card-text{
+    font-size: 15px;
+}
+/*картинка карты товара*/
+.carousel-inner img {
+    height: 400px;
+}
+/*вид карты с тенью*/
+.card {
+    border: none;
+    box-shadow: 0 1px 5px 0 #004640; 
+}
+/*кнопка карты*/
+.btn.btn-primary{
+    background-color: #5DCEC6;
+    color: black;  
+}

@@ -1,0 +1,19 @@
+/*блок*/
+div{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 18px;
+}
+/*ссылка*/
+a{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.cart-item-img {
+    max-height: 100px;
+}
+
+.cart-button-form {
+    display: inline;
+}
