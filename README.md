@@ -9,4 +9,4 @@ docker-compose exec php bin/console d:da:cr
 docker-compose exec php bin/console doctrine:migrations:migrate  
 docker-compose exec php bin/console d:f:l  
 Для некоторых пунктов требуется подтверждение, для этого необходимо написать Yes и нажать Enter. Эти команды необходимы для миграции фикстур.  
-После в Docker появится проект, можно перейти по кнопке - https://disk.yandex.ru/i/n7rTr0__eHbw9w или по адресу http://localhost:8000/
+После этого в Docker появится проект, можно перейти по кнопке - https://disk.yandex.ru/i/n7rTr0__eHbw9w или по адресу http://localhost:8000/
